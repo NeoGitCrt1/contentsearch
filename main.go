@@ -42,6 +42,11 @@ func out(outfile *string) {
 	var member void
 	set := make(map[string]void)
 	for f := range ch {
+		if (pos == -1) {
+			fi.WriteString(f)
+			fi.WriteString("\r\n")
+			continue
+		}
 		_, exists := set[f]
 		if !exists {
 			set[f] = member
