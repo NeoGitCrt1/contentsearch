@@ -14,7 +14,7 @@ import (
 
 type void struct{}
 var reg *regexp.Regexp
-var ch chan string = make(chan string, 200)
+var ch chan *string = make(chan *string, 200)
 var wg *sync.WaitGroup = &sync.WaitGroup{}
 var pos int
 var extExcluded string
@@ -31,7 +31,7 @@ func main() {
 	
 	go out(outfile)
 	
-	iterate(rootPath, scan, wg)
+	iterate(rootPath)
 	wg.Wait()
 	close(ch)
 
@@ -43,14 +43,14 @@ func out(outfile *string) {
 	set := make(map[string]void)
 	for f := range ch {
 		if (pos == -1) {
-			fi.WriteString(f)
+			fi.WriteString(*f)
 			fi.WriteString("\r\n")
 			continue
 		}
-		_, exists := set[f]
+		_, exists := set[*f]
 		if !exists {
-			set[f] = member
-			fi.WriteString(f)
+			set[*f] = member
+			fi.WriteString(*f)
 			fi.WriteString("\r\n")
 		//	log.Println(f)
 		}
@@ -68,9 +68,9 @@ func scan(fn string) {
 		found := reg.FindStringSubmatch(line)
 		if ( found != nil ) {
 			if (pos == -1) {
-				ch <- line
+				ch <- &line
 			} else {
-				ch <- found[pos]
+				ch <- &(found[pos])
 			}
 		}
 		
@@ -78,7 +78,7 @@ func scan(fn string) {
 }
 
 
-func iterate(path *string, searchMailId func(fn string), wg *sync.WaitGroup) {
+func iterate(path *string) {
 	var member void
 	set := make(map[string]void)
 	exclusive := strings.Split(extExcluded, ",")
@@ -102,7 +102,7 @@ func iterate(path *string, searchMailId func(fn string), wg *sync.WaitGroup) {
 		
 		log.Printf(">> %s", d.Name())
 		wg.Add(1)
-		go searchMailId(path)
+		go scan(path)
 		return nil
 	})
 
