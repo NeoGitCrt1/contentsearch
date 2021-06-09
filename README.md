@@ -12,4 +12,4 @@ search content by regex match and output to a file with dupliacation emitted
  ```
  
  - next version feature
-1. add bloom filter
+1. add support for bloom filter
