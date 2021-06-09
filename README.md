@@ -10,3 +10,6 @@ search content by regex match and output to a file with dupliacation emitted
  ```cmd
  .\findMailId.exe -?
  ```
+ 
+ - next version feature
+1. add bloom filter
