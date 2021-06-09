@@ -3,16 +3,16 @@ search content by regex match and output to a file with dupliacation emitted
 
 - usage example
 ```cmd
- .\findMailId.exe -root "C:\bro\html" -reg ">(?P<name>[A-Z]{3}-[A-Z]{3}-.*)<\/td>" -out "C:/work/tmp/r2.txt"
+ .\contentsearch.exe -root "C:\bro\html" -reg ">(?P<name>[A-Z]{3}-[A-Z]{3}-.*)<\/td>" -out "C:/work/tmp/r2.txt"
  ```
  
  - full help 
  ```cmd
- .\findMailId.exe -?
+ .\contentsearch.exe -?
  ```
  you may get 
  ```shell
-Usage of C:\work\tmp\findMailId.exe:
+Usage of C:\work\tmp\contentsearch.exe:
   -exclude string
         exclude file extension. eg. .zip,.exe (default ".zip,.exe")
   -out string
